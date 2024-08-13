@@ -1,0 +1,42 @@
+<div class="comp-tab">
+  <div class="body">
+    <div class="body-header">
+      <div class="header">
+        <img class="img" src="https://10decoders.com/wp-content/uploads/2023/08/logo-straight.png">
+      </div>
+      <span class="">
+        Enrich Reconciliation Summary
+      </span>
+      <hr>
+    </div>
+    <div class="main-body">
+      <div class="tables row d-flex">
+        <mat-progress-bar *ngIf="isLoading" mode="indeterminate" style="margin-top: 10px;" ></mat-progress-bar>
+        <div class="col-md-6 col-lg-6 col-sm-12">
+          <div class="table-container">
+            <table class="table table-md table-bordered">
+              <thead>
+                <tr>
+                  <th *ngFor="let column of columns">
+                      {{ column.header }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let row of cereconTableValue">
+                  <td *ngFor="let column of columns">
+                    {{ row[column.field] }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+   </div>
+  </div>
+  <div class="footer">
+    <button nz-button class="cancel" (click)="cancel()">
+      Back
+    </button>
+  </div>
+</div>

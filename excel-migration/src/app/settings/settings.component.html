@@ -1,0 +1,12 @@
+<nz-layout class="inner-layout" style="height: 100%;">
+    <nz-sider nzWidth="230px" nzTheme="light">
+      <ul nz-menu nzMode="inline" class="sider-menu">
+        <li nz-menu-item nzSelected (click)="setTitle('Users')">Users</li>
+        <li nz-menu-item (click)="setTitle('Tickets')">Tickets</li>
+      </ul>
+    </nz-sider>
+    <nz-content class="inner-content">
+        <app-users-list *ngIf="title === 'Users'"></app-users-list>
+        <app-tickets *ngIf="title === 'Tickets'"></app-tickets>
+    </nz-content>
+  </nz-layout>

@@ -1,0 +1,71 @@
+<div class="container">
+  <div class="header d-flex" *ngIf="!nextpage">
+    <div>
+    <img class="img" src="">
+  </div>
+  <div style="margin-right: 120px;">
+    <mat-form-field appearance="outline" class="matdropdown">
+      <mat-label>Select Recon</mat-label>
+      <mat-select [(ngModel)]="Selectedoption">
+        <mat-option value="option1">Cashbook Recon</mat-option>
+        <mat-option value="option2">Enrich Recon</mat-option>
+        <mat-option value="option3">TIS Recon</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  </div>
+  <div *ngIf="uploading" class="card">
+    Executing...
+  </div>
+  <mat-progress-bar style="margin-top: 10px;" *ngIf="uploading" mode="determinate" [value]="progress"></mat-progress-bar>
+  <div class="dynamic-view" *ngIf="primarypage">
+    <div class="body">
+      <div class="body-header">
+        <span class="" *ngIf="Selectedoption === 'option1'">
+          Bank Reconciliation: Comparing Bank Statement and Cash Book
+        </span>
+        <span class="" *ngIf="Selectedoption === 'option2'">
+          Bank Reconciliation: Comparing Cardwork and Enrich
+        </span>
+        <hr>
+        <span class="sec-header">
+          Select the individual time period for the bank reconciliation to be performed & upload statement and book data
+        </span>
+      </div>
+      <div class="main-body">
+        <div class="row">
+          <div class="col-3">
+            <label>First Day:</label><br>
+            <nz-date-picker [(ngModel)]="reconciliation.reconstart" (ngModelChange)="onChangeStart($event)" [nzDisabled]=true></nz-date-picker>
+          </div>
+          <div class="col-3">
+            <label>Last Day:</label><br>
+            <nz-date-picker [(ngModel)]="reconciliation.reconend" (ngModelChange)="onChangeEnd($event)" [nzDisabled]=true></nz-date-picker>
+          </div>
+          <div class="col-3" *ngIf="Selectedoption === 'option1'">
+            <label>Bank Statement data :</label><br>
+            <input type="file" class="form-control" multiple="true" (change)="onFileSelected($event, 'bank')" name="avatar" /><br>
+            <label>Cash Book data :</label><br>
+            <input type="file" class="form-control" multiple="true" (change)="onFileSelected($event, 'cash book')" name="avatar" />
+          </div>
+          <div class="col-3" *ngIf="Selectedoption === 'option2'">
+            <label>Cardwork data :</label><br>
+            <input type="file" class="form-control" multiple="true" (change)="onFileSelected($event, 'cardwork')" name="avatar" /><br>
+            <label>Enrich data :</label><br>
+            <input type="file" class="form-control" multiple="true" (change)="onFileSelected($event, 'enrich')" name="avatar" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer">
+      <button nz-button class="cancel">
+        Cancel
+      </button>
+      <button nz-button class="btn-primary" style="margin-left: 20px;" (click)="simulateUpload()">
+        Next
+      </button>
+    </div>
+  </div> 
+  <app-comparision *ngIf="nextpage && !primarypage" (cancelEvent)="cancel()" [cashBookBalance]="cashBookBalance" [bankStatementBalance]="bankStatementBalance" [bankStatement]="bankStatement" [cashBook]="cashBook" [cereconTableValue]="cereconTableValue" ></app-comparision>
+
+<!-- </div> -->
